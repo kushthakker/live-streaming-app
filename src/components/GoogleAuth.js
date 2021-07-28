@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { signIn, signOut } from "../actions";
 import { gapi } from "gapi-script";
 
-const GoogleAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
   useEffect(() => {
     gapi.load("client:auth2", () => {
       gapi.client
@@ -12,14 +13,15 @@ const GoogleAuth = () => {
         })
         .then(() => {
           const auth = gapi.auth2.getAuthInstance();
-          setIsLoggedIn(auth.isSignedIn.get());
+          onAuthChange(auth.isSignedIn.get());
           auth.isSignedIn.listen(onAuthChange);
         });
     });
-  }, [isLoggedIn]);
+  }, []);
 
-  const onAuthChange = () => {
-    setIsLoggedIn(gapi.auth2.getAuthInstance().isSignedIn.get());
+  const onAuthChange = (isSignedIn) => {
+    if (isSignedIn) signIn();
+    else signOut();
   };
 
   const onSignInClick = () => {
@@ -31,10 +33,10 @@ const GoogleAuth = () => {
   };
 
   const renderAuthButton = () => {
-    if (isLoggedIn === null) {
+    if (isSignedIn === null) {
       return <div>Loading...</div>;
     }
-    if (isLoggedIn) {
+    if (isSignedIn) {
       return (
         <button className="ui red google button" onClick={onSignOutClick}>
           <i className="google icon" />
@@ -53,4 +55,8 @@ const GoogleAuth = () => {
   return <div>{renderAuthButton()}</div>;
 };
 
-export default GoogleAuth;
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.auth.isSignedIn };
+};
+
+export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
