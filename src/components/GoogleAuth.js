@@ -15,9 +15,10 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
           const auth = gapi.auth2.getAuthInstance();
           onAuthChange(auth.isSignedIn.get());
           auth.isSignedIn.listen(onAuthChange);
+          console.log(`rerender`);
         });
     });
-  }, []);
+  });
 
   const onAuthChange = (isSignedIn) => {
     if (isSignedIn) signIn();
