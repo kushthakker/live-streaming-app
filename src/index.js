@@ -6,13 +6,16 @@ import App from "./components/App";
 import reducers from "./reducers";
 import "./index.css";
 import "semantic-ui-css/semantic.min.css";
+import LogRocket from "logrocket";
 // import thunk from "redux-thunk";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(/* thunk */))
+  composeEnhancers(applyMiddleware(LogRocket.reduxMiddleware()))
 );
+
+LogRocket.init("waec6i/test");
 ReactDOM.render(
   <Provider store={store}>
     <App />

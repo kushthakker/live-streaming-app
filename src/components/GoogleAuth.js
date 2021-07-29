@@ -5,6 +5,7 @@ import { gapi } from "gapi-script";
 
 const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
   let onAuthChange;
+
   useEffect(() => {
     gapi.load("client:auth2", () => {
       gapi.client
@@ -22,7 +23,19 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
 
   onAuthChange = (isSignedIn) => {
     if (isSignedIn)
-      signIn(gapi.auth2.getAuthInstance().currentUser.get().getId());
+      signIn(
+        gapi.auth2.getAuthInstance().currentUser.get().getId(),
+        gapi.auth2
+          .getAuthInstance()
+          .currentUser.get()
+          .getBasicProfile()
+          .getName(),
+        gapi.auth2
+          .getAuthInstance()
+          .currentUser.get()
+          .getBasicProfile()
+          .getEmail()
+      );
     else signOut();
   };
 
