@@ -4,6 +4,7 @@ import { signIn, signOut } from "../actions";
 import { gapi } from "gapi-script";
 
 const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
+  let onAuthChange;
   useEffect(() => {
     gapi.load("client:auth2", () => {
       gapi.client
@@ -15,13 +16,13 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
           const auth = gapi.auth2.getAuthInstance();
           onAuthChange(auth.isSignedIn.get());
           auth.isSignedIn.listen(onAuthChange);
-          console.log(`rerender`);
         });
     });
-  });
+  }, [onAuthChange]);
 
-  const onAuthChange = (isSignedIn) => {
-    if (isSignedIn) signIn();
+  onAuthChange = (isSignedIn) => {
+    if (isSignedIn)
+      signIn(gapi.auth2.getAuthInstance().currentUser.get().getId());
     else signOut();
   };
 
