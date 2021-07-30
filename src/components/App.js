@@ -10,10 +10,12 @@ import StreamShow from "./streams/StreamShow";
 import "semantic-ui-css/semantic.min.css";
 import LogRocket from "logrocket";
 
-const App = ({ isSignedIn }) => {
-  LogRocket.identify(`${isSignedIn}`, {
-    name: isSignedIn.fullName,
-    email: isSignedIn.email,
+const App = ({ user }) => {
+  const name = user.fullName;
+  const email = user.email;
+  LogRocket.identify(`${user}`, {
+    name,
+    email,
   });
   return (
     <div className="ui container">
@@ -32,7 +34,8 @@ const App = ({ isSignedIn }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { isSignedIn: state.auth };
+  console.log(state);
+  return { user: state.auth };
 };
 
 export default connect(mapStateToProps)(App);

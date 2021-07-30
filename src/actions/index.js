@@ -14,3 +14,10 @@ export const signOut = () => {
     type: "SIGN_OUT",
   };
 };
+
+export const FormSubmit = (valueObject) => {
+  return {
+    type: "FORM_SUBMIT",
+    payload: valueObject,
+  };
+};
