@@ -1,10 +1,13 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
 import * as yup from "yup";
-import { FormSubmit } from "../actions";
+import { FormSubmit, CreateStream } from "../actions";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-const HomeForm = ({ FormSubmit }) => {
+const HomeForm = ({ FormSubmit, CreateStream }) => {
+  let history = useHistory();
+  console.log(history);
   const validationSchema = yup.object({
     title: yup.string().required("Please fill this field"),
     description: yup.string().required("Please fill this field"),
@@ -16,10 +19,11 @@ const HomeForm = ({ FormSubmit }) => {
         validationSchema={validationSchema}
         onSubmit={(data, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          console.log(data);
           FormSubmit(data);
+          CreateStream(data);
           setSubmitting(false);
           resetForm();
+          history.replace("/");
         }}
       >
         {({ values, isSubmitting, errors, touched }) => (
@@ -35,7 +39,7 @@ const HomeForm = ({ FormSubmit }) => {
                 component="input"
                 type="text"
                 placeholder="Title"
-                autocomplete="off"
+                autoComplete="off"
               />
             </div>
             {touched.title && errors.title && (
@@ -57,7 +61,7 @@ const HomeForm = ({ FormSubmit }) => {
                 type="text"
                 placeholder="Description"
                 rows="3"
-                autocomplete="off"
+                autoComplete="off"
                 // style={{ resize: "none" }}
               />
             </div>
@@ -84,4 +88,4 @@ const HomeForm = ({ FormSubmit }) => {
   );
 };
 
-export default connect(null, { FormSubmit })(HomeForm);
+export default connect(null, { FormSubmit, CreateStream })(HomeForm);

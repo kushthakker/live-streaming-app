@@ -34,7 +34,12 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
           .getAuthInstance()
           .currentUser.get()
           .getBasicProfile()
-          .getEmail()
+          .getEmail(),
+        gapi.auth2
+          .getAuthInstance()
+          .currentUser.get()
+          .getBasicProfile()
+          .getGivenName()
       );
     else signOut();
   };
@@ -45,6 +50,7 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
 
   const onSignOutClick = () => {
     gapi.auth2.getAuthInstance().signOut();
+    // gapi.auth2.getAuthInstance().disconnect();
   };
 
   const renderAuthButton = () => {
