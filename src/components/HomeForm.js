@@ -1,12 +1,10 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
 import * as yup from "yup";
-import { FormSubmit, CreateStream } from "../actions";
-import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const HomeForm = ({ FormSubmit, CreateStream }) => {
-  let history = useHistory();
+const HomeForm = ({ titleValue = "", desciptionValue = "", onSubmit }) => {
+  const history = useHistory();
   console.log(history);
   const validationSchema = yup.object({
     title: yup.string().required("Please fill this field"),
@@ -15,12 +13,14 @@ const HomeForm = ({ FormSubmit, CreateStream }) => {
   return (
     <div>
       <Formik
-        initialValues={{ title: "", description: "" }}
+        initialValues={{
+          title: `${titleValue}`,
+          description: `${desciptionValue}`,
+        }}
         validationSchema={validationSchema}
         onSubmit={(data, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          FormSubmit(data);
-          CreateStream(data);
+          onSubmit(data);
           setSubmitting(false);
           resetForm();
           history.replace("/");
@@ -43,8 +43,8 @@ const HomeForm = ({ FormSubmit, CreateStream }) => {
               />
             </div>
             {touched.title && errors.title && (
-              <div class="ui error  message">
-                <div class="header">Action Forbidden</div>
+              <div className="ui error  message">
+                <div className="header">Action Forbidden</div>
                 <p>{errors.title}</p>
               </div>
             )}
@@ -66,8 +66,8 @@ const HomeForm = ({ FormSubmit, CreateStream }) => {
               />
             </div>
             {touched.description && errors.description && (
-              <div class="ui error  message">
-                <div class="header">Action Forbidden</div>
+              <div className="ui error  message">
+                <div className="header">Action Forbidden</div>
                 <p>{errors.description}</p>
               </div>
             )}
@@ -88,4 +88,4 @@ const HomeForm = ({ FormSubmit, CreateStream }) => {
   );
 };
 
-export default connect(null, { FormSubmit, CreateStream })(HomeForm);
+export default HomeForm;

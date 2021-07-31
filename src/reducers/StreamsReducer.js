@@ -2,7 +2,7 @@ import _ from "lodash";
 
 const streamsReducer = (state = {}, action) => {
   switch (action.type) {
-    case "EDIT_SUBMIT":
+    case "EDIT_STREAM":
       return {
         ...state,
         [action.payload.id]: action.payload,

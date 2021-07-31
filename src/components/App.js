@@ -10,7 +10,7 @@ import StreamShow from "./streams/StreamShow";
 import "semantic-ui-css/semantic.min.css";
 import LogRocket from "logrocket";
 
-const App = ({ user }) => {
+const App = ({ user, stream }) => {
   const name = user.fullName;
   const email = user.email;
   LogRocket.identify(`${user}`, {
@@ -25,7 +25,7 @@ const App = ({ user }) => {
           <Route path="/" exact component={StreamList} />
           <Route path="/streams/new" exact component={StreamCreate} />
           <Route path="/streams/delete" exact component={StreamDelete} />
-          <Route path="/streams/edit" exact component={StreamEdit} />
+          <Route path="/streams/edit/:id" exact component={StreamEdit} />
           <Route path="/streams/show" exact component={StreamShow} />
         </div>
       </BrowserRouter>
@@ -33,7 +33,7 @@ const App = ({ user }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return { user: state.auth };
 };
 

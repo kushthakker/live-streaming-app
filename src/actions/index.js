@@ -18,12 +18,12 @@ export const signOut = () => {
   };
 };
 
-export const FormSubmit = (valueObject) => {
-  return {
-    type: "FORM_SUBMIT",
-    payload: valueObject,
-  };
-};
+// export const FormSubmit = (valueObject) => {
+//   return {
+//     type: "FORM_SUBMIT",
+//     payload: valueObject,
+//   };
+// };
 
 export const CreateStream = (values) => async (dispatch, getState) => {
   const { userId } = getState().auth;
@@ -52,8 +52,8 @@ export const FetchStreams = () => async (dispatch) => {
 };
 
 export const EditStream = (id, values) => async (dispatch) => {
-  const response = await streams.put(`/streams/${id}`, values);
-
+  const response = await streams.put(`/streams/${Number(id)}`, values);
+  console.log(response);
   dispatch({
     type: "EDIT_STREAM",
     payload: response.data,

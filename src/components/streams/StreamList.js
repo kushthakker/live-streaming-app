@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { FetchStreams } from "../../actions";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const StreamList = ({
   streams,
@@ -19,8 +19,12 @@ const StreamList = ({
     if (stream.userId === currentStateId) {
       return (
         <div className="right floated content">
-          <button className="ui button primary">Edit</button>
-          <button className="ui button negative">Delete</button>
+          <Link to={`/streams/edit/${stream.id}`} className="ui button primary">
+            Edit
+          </Link>
+          <Link to="" className="ui button negative">
+            Delete
+          </Link>
         </div>
       );
     }
@@ -59,7 +63,7 @@ const StreamList = ({
 
   return (
     <div>
-      <h2>Welcome {`${fullName}`}</h2>
+      {isSignedIn === null ? null : <h2>Welcome {`${fullName}`}</h2>}
       <h2>Streams</h2>
       <div className="ui celled list">{renderList()}</div>
       <div>{renderCreateButton()}</div>
