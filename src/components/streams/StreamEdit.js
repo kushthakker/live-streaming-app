@@ -31,7 +31,10 @@ const StreamEdit = (props) => {
 
   return (
     <>
-      {props.auth.isSignedIn && props.stream.userId === props.auth.userId ? (
+      {props.auth.isSignedIn === null ? (
+        <div>Loading...</div>
+      ) : props.auth.isSignedIn === true &&
+        props.stream.userId === props.auth.userId ? (
         render()
       ) : (
         <Redirect to="/" />

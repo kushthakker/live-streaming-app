@@ -65,7 +65,7 @@ const StreamList = ({
   };
 
   return (
-    <div>
+    <div id="homePage">
       {isSignedIn === null ? null : <h2>Welcome {`${fullName}`}</h2>}
       <h2>Streams</h2>
       <div className="ui celled list">{renderList()}</div>
