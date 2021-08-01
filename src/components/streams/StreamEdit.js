@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import HomeForm from "../HomeForm";
 import { connect } from "react-redux";
 import { EditStream, FetchStream } from "../../actions";
 const StreamEdit = (props) => {
-  console.log(props);
   useEffect(() => {
     props.FetchStream(props.match.params.id);
   }, []);
 
   const edit = (data) => {
     const id = Number(props.match.params.id);
-    props.EditStream(id, { ...data, userId: props.auth.userId });
+    props.EditStream(id, data);
   };
 
   const render = () => {
@@ -29,8 +29,17 @@ const StreamEdit = (props) => {
       );
   };
 
-  return <>{render()}</>;
+  return (
+    <>
+      {props.auth.isSignedIn && props.stream.userId === props.auth.userId ? (
+        render()
+      ) : (
+        <Redirect to="/" />
+      )}
+    </>
+  );
 };
+
 const mapStateToProps = (state, ownProps) => {
   return {
     auth: state.auth,

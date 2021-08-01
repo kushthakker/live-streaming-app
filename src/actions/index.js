@@ -52,7 +52,7 @@ export const FetchStreams = () => async (dispatch) => {
 };
 
 export const EditStream = (id, values) => async (dispatch) => {
-  const response = await streams.put(`/streams/${Number(id)}`, values);
+  const response = await streams.patch(`/streams/${Number(id)}`, values);
   console.log(response);
   dispatch({
     type: "EDIT_STREAM",

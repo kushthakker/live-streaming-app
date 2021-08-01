@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 
 const HomeForm = ({ titleValue = "", desciptionValue = "", onSubmit }) => {
   const history = useHistory();
-  console.log(history);
   const validationSchema = yup.object({
     title: yup.string().required("Please fill this field"),
     description: yup.string().required("Please fill this field"),
