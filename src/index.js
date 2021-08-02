@@ -5,9 +5,19 @@ import { createStore, applyMiddleware, compose } from "redux";
 import App from "./components/App";
 import reducers from "./reducers";
 import "./index.css";
+<<<<<<< HEAD
 import "semantic-ui-css/semantic.min.css";
 import LogRocket from "logrocket";
 import thunk from "redux-thunk";
+=======
+// import thunk from "redux-thunk";
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware(/* thunk */))
+);
+>>>>>>> c37c722939e23f1a90d29b4ac368eb86608a15e8
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
