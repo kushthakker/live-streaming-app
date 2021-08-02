@@ -10,7 +10,7 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
     gapi.load("client:auth2", () => {
       gapi.client
         .init({
-          clientId: `109676282292-lhnkgvbiq2s1snod03sa4sdnisq7gbgg.apps.googleusercontent.com`,
+          clientId: process.env.GOOGLE_AUTH,
           scope: "email",
         })
         .then(() => {
