@@ -12,7 +12,7 @@ const StreamShow = (props) => {
     if (!props.stream) return;
     const flvPlayer = flv.createPlayer({
       type: "flv",
-      url: `http://kush-live-streaming-app.vercel.app:8000/live/${id}.flv`,
+      url: `https://rtmp-server-for-kush.herokuapp.com/live:8000/live/${id}.flv`,
     });
     flvPlayer.attachMediaElement(videoRef.current);
     flvPlayer.load();
