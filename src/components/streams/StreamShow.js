@@ -1,17 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { FetchStream } from "../../actions";
-import { Redirect } from "react-router-dom";
+import flv from "flv.js";
 
 const StreamShow = (props) => {
-  console.log(props);
+  const videoRef = useRef();
+
   useEffect(() => {
-    props.FetchStream(props.match.params.id);
+    const id = props.match.params.id;
+    props.FetchStream(id);
+    if (!props.stream) return;
+    const flvPlayer = flv.createPlayer({
+      type: "flv",
+      url: `http://localhost:8000/live/${id}.flv`,
+    });
+    flvPlayer.attachMediaElement(videoRef.current);
+    flvPlayer.load();
+    flvPlayer.play();
+    return () => {
+      flvPlayer.destroy();
+      console.log(`unmounted`);
+    };
   }, []);
 
   const render = () => {
     return (
       <div>
+        <video ref={videoRef} style={{ width: "100%" }} controls />
         <h1>{props.stream.title}</h1>
         <p>{props.stream.description}</p>
       </div>
@@ -20,14 +35,7 @@ const StreamShow = (props) => {
 
   return (
     <div>
-      {props.auth.isSignedIn === null ? (
-        <div>Loading...</div>
-      ) : props.auth.isSignedIn === true &&
-        props.stream.userId === props.auth.userId ? (
-        render()
-      ) : (
-        <Redirect to="/" />
-      )}
+      {props.auth.isSignedIn === null ? <div>Loading...</div> : render()}
     </div>
   );
 };
