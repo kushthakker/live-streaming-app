@@ -5,7 +5,6 @@ import { gapi } from "gapi-script";
 
 const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
   let onAuthChange;
-  const KEY = process.env.GOOGLE_AUTH;
 
   useEffect(() => {
     gapi.load("client:auth2", () => {
