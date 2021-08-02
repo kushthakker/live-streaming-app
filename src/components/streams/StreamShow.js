@@ -16,7 +16,6 @@ const StreamShow = (props) => {
     });
     flvPlayer.attachMediaElement(videoRef.current);
     flvPlayer.load();
-    flvPlayer.play();
     return () => {
       flvPlayer.destroy();
       console.log(`unmounted`);
